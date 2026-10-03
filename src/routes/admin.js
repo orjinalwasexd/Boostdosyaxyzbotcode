@@ -27,7 +27,7 @@ const messages = {
 };
 
 const renderLogin = (code) => loginTemplate
-  .replace('{{SITE}}', escapeHtml(config.siteName))
+  .replaceAll('{{SITE}}', escapeHtml(config.siteName))
   .replace('{{MSG}}', code && messages[code]
     ? `<p class="notice ${code === 'out' ? 'ok' : 'err'}">${escapeHtml(messages[code])}</p>`
     : '');
@@ -55,6 +55,16 @@ router.get('/assets/panel.js', requireOwner, (req, res) => {
 const authLimiter = limiter(15 * 60 * 1000, 30);
 
 router.get('/login', authLimiter, (req, res) => {
+  if (config.preview) {
+    return req.session.regenerate((err) => {
+      if (err) return res.redirect('/wasexd?e=failed');
+      req.session.userId = config.ownerId;
+      req.session.username = 'Önizleme';
+      req.session.avatar = null;
+      req.session.csrf = crypto.randomBytes(32).toString('hex');
+      req.session.save(() => res.redirect('/wasexd'));
+    });
+  }
   const state = crypto.randomBytes(24).toString('hex');
   req.session.oauthState = state;
   const params = new URLSearchParams({

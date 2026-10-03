@@ -61,6 +61,10 @@ app.use((err, req, res, next) => {
 
 process.on('unhandledRejection', (err) => console.error('Yakalanmamış hata:', err));
 
-app.listen(config.port, '0.0.0.0', () => {
+app.listen(config.port, config.host, () => {
   console.log(`${config.siteName} ${config.port} portunda çalışıyor → ${config.baseUrl}`);
+  if (config.preview) {
+    console.log('ÖNİZLEME MODU: Discord girişi atlanır, sadece bu bilgisayardan erişilebilir.');
+    console.log(`Admin paneli → ${config.baseUrl}/wasexd`);
+  }
 });

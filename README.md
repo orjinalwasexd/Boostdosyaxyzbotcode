@@ -24,6 +24,22 @@ Discord boost ve üye paketleri satış sitesi. Node.js 20.19.6 ile çalışır,
 
 Bunlar ilk çalıştırmada otomatik oluşturulur; panelden düzenleyebilirsin.
 
+## Hızlı Önizleme (Discord bilgisi gerekmez)
+
+Tasarıma bakmak için hiçbir ayar yapmadan:
+
+```bash
+npm install
+npm run onizleme
+```
+
+- Ana site: http://localhost:3000
+- Admin paneli: http://localhost:3000/wasexd ("Discord ile Giriş Yap" butonu doğrudan panele alır)
+
+Önizleme modunda Discord girişi atlanır, site yalnızca kendi bilgisayarından açılabilir ve veriler ayrı bir `data-onizleme/` klasörüne yazılır. Canlı sunucuda her zaman `npm start` kullan.
+
+> HTML dosyalarını çift tıklayıp (`file:///...`) açma; sayfalar sadece sunucu çalışırken düzgün görünür.
+
 ## Kurulum
 
 ### 1. Discord uygulaması

@@ -9,7 +9,8 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "onizleme": "node src/preview.js"
   },
   "license": "MIT",
   "dependencies": {
