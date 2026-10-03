@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boostdosya · Discord Boost ve Üye Paketleri</title>
+<meta name="description" content="Discord sunucunuz için uygun fiyatlı boost ve üye paketleri. IBAN ile komisyonsuz ödeme.">
+<meta name="theme-color" content="#0c0b12">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Rubik:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="/" class="brand"><span class="gem" aria-hidden="true"></span><span data-site-name>Boostdosya</span></a>
+    <nav class="links">
+      <a href="#paketler">Paketler</a>
+      <a href="#nasil">Nasıl Çalışır</a>
+      <a href="#sss">SSS</a>
+    </nav>
+    <a href="#paketler" class="btn btn-sm">Satın Al</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap"><div class="hero-in">
+      <p class="eyebrow">DISCORD SUNUCULARI İÇİN</p>
+      <h1>Sunucunu <em>seviye 3</em>'e taşı, topluluğunu büyüt.</h1>
+      <p class="lead">14x boost ve üye paketleri tek yerde. Fiyatlar net, ödeme IBAN ile, komisyon yok.</p>
+      <div class="hero-cta">
+        <a href="#paketler" class="btn">Paketleri İncele</a>
+        <a href="#nasil" class="btn btn-ghost">Nasıl çalışır?</a>
+      </div>
+      <ul class="chips">
+        <li>IBAN ile ödeme</li>
+        <li>Komisyon yok</li>
+        <li>Fiyatlara her şey dahil</li>
+      </ul>
+    </div></div>
+    <div class="orb" aria-hidden="true"></div>
+  </section>
+
+  <section id="paketler" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Paketler</h2>
+        <p>İhtiyacına uygun paketi seç. Tüm fiyatlar Türk Lirası ve her şey dahildir.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="grid" id="products">
+        <div class="card skeleton"></div>
+        <div class="card skeleton"></div>
+        <div class="card skeleton"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nasil" class="section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Nasıl çalışır?</h2>
+        <p>Üç adımda sunucuna teslim.</p>
+      </div>
+      <ol class="steps">
+        <li><span>01</span><h3>Paketini seç</h3><p>Boost ya da üye paketlerinden sunucuna uygun olanı belirle.</p></li>
+        <li><span>02</span><h3>IBAN ile öde</h3><p>Ödemeni komisyonsuz olarak IBAN üzerinden yap.</p></li>
+        <li><span>03</span><h3>Teslim al</h3><p>Ödemen onaylandıktan sonra paketin sunucuna tanımlanır.</p></li>
+      </ol>
+      <div class="pay-note">
+        <strong>Ödemeler şu an kapalı.</strong>
+        <span>Ödeme sistemi kısa süre içinde aktif edilecek. Açıldığında bu sayfadan satın alabileceksin.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="sss" class="section">
+    <div class="wrap narrow">
+      <div class="section-head">
+        <h2>Sıkça sorulan sorular</h2>
+      </div>
+      <details><summary>Ödemeyi nasıl yapacağım?</summary><p>Ödemeler IBAN ile yapılır ve ek komisyon alınmaz. Ödeme sistemi şu an kapalıdır, açıldığında duyurulacaktır.</p></details>
+      <details><summary>Fiyatlara vergi dahil mi?</summary><p>Evet. Sitede gördüğün fiyat, ödeyeceğin tutarın tamamıdır.</p></details>
+      <details><summary>14x boost ne sağlar?</summary><p>14 boost ile sunucun seviye 3 olur: daha fazla emoji ve çıkartma yuvası, yüksek ses kalitesi, özel davet bağlantısı, banner ve daha fazlası.</p></details>
+      <details><summary>Süre bitince ne olur?</summary><p>Paket süresi dolduğunda boostlar sunucudan kalkar. Dilersen aynı paketi yeniden alabilirsin.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-in">
+    <span>© <span id="year"></span> <span data-site-name>Boostdosya</span></span>
+    <a id="invite" href="#" class="hidden" rel="noopener noreferrer" target="_blank">Discord sunucumuz</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/js/app.js" defer></script>
+</body>
+</html>

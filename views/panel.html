@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Yönetim Paneli</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Rubik:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="/" class="brand" target="_blank" rel="noopener"><span class="gem" aria-hidden="true"></span><span>Yönetim</span></a>
+    <div class="me">
+      <img id="me-avatar" class="avatar hidden" alt="">
+      <span id="me-name"></span>
+      <button type="button" class="btn btn-ghost btn-sm" id="logout">Çıkış</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+  <div class="stats">
+    <div class="stat"><span>Kategori</span><strong id="stat-cat">0</strong></div>
+    <div class="stat"><span>Ürün</span><strong id="stat-prod">0</strong></div>
+    <div class="stat"><span>Yayında</span><strong id="stat-active">0</strong></div>
+    <div class="stat"><span>Ödemeler</span><strong class="off">Kapalı</strong></div>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Kategoriler</h2>
+    </div>
+    <form id="cat-form" class="form-row" autocomplete="off">
+      <input type="hidden" name="id">
+      <label class="field grow"><span>Kategori adı</span><input name="name" maxlength="60" required></label>
+      <label class="field small"><span>Sıra</span><input name="order" type="number" min="0" max="9999" value="0"></label>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-sm" id="cat-submit">Kategori Ekle</button>
+        <button type="button" class="btn btn-ghost btn-sm hidden" id="cat-cancel">İptal</button>
+      </div>
+    </form>
+    <div class="list" id="cat-list"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Ürünler</h2>
+    </div>
+    <form id="prod-form" class="form-grid" autocomplete="off">
+      <input type="hidden" name="id">
+      <label class="field"><span>Ürün adı</span><input name="name" maxlength="80" required></label>
+      <label class="field"><span>Kategori</span><select name="categoryId" required></select></label>
+      <label class="field"><span>Fiyat (₺)</span><input name="price" type="number" min="0" step="0.01" required></label>
+      <label class="field"><span>Süre</span><input name="duration" maxlength="30" placeholder="ör. 1 Ay"></label>
+      <label class="field"><span>Rozet</span><input name="badge" maxlength="24" placeholder="ör. Avantajlı"></label>
+      <label class="field"><span>Sıra</span><input name="order" type="number" min="0" max="9999" value="0"></label>
+      <label class="field wide"><span>Açıklama</span><textarea name="description" maxlength="400" rows="2"></textarea></label>
+      <label class="field wide"><span>Özellikler (her satıra bir tane)</span><textarea name="features" rows="3"></textarea></label>
+      <label class="check"><input type="checkbox" name="active" checked><span>Sitede yayında</span></label>
+      <div class="form-actions wide">
+        <button type="submit" class="btn btn-sm" id="prod-submit">Ürün Ekle</button>
+        <button type="button" class="btn btn-ghost btn-sm hidden" id="prod-cancel">İptal</button>
+      </div>
+    </form>
+    <div class="list" id="prod-list"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/wasexd/assets/panel.js" defer></script>
+</body>
+</html>

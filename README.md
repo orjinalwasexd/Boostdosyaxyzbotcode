@@ -1,69 +1,99 @@
 # Boostdosyaxyzbotcode
 
-Boostdosyaxyzbotcode için bot kaynak kodu deposu.
-
-> **Not:** Proje henüz geliştirme aşamasındadır. Bu README, kod eklendikçe güncellenecektir.
-
-## İçindekiler
-
-- [Özellikler](#özellikler)
-- [Gereksinimler](#gereksinimler)
-- [Kurulum](#kurulum)
-- [Yapılandırma](#yapılandırma)
-- [Kullanım](#kullanım)
-- [Proje Yapısı](#proje-yapısı)
-- [Katkıda Bulunma](#katkıda-bulunma)
-- [Lisans](#lisans)
+Discord boost ve üye paketleri satış sitesi. Node.js 20.19.6 ile çalışır, bot-hosting.net gibi Node destekli hostinglerde doğrudan çalıştırılabilir.
 
 ## Özellikler
 
-- _Henüz eklenmedi — botun özellikleri burada listelenecek._
+- Modern, mobil uyumlu, tamamen Türkçe arayüz
+- Kategorili paket listesi (Sunucu Boost, Üye Paketleri)
+- Satın Al butonu mevcut, ödemeler şu an **kapalı** (tıklanınca bilgilendirme gösterir)
+- Ödeme yöntemi: IBAN, komisyonsuz, fiyatlara her şey dahil
+- `/wasexd` adresinde yönetim paneli
+  - Giriş yalnızca **Discord** ile yapılır, kullanıcı adı/şifre yoktur
+  - Yalnızca kurucu (`545574728186855424`) girebilir, diğer hesaplar reddedilir
+  - Kategori ekleme / düzenleme / silme
+  - Ürün ekleme / düzenleme / silme / gizleme
 
-## Gereksinimler
+### Hazır gelen paketler
 
-- _Kullanılan çalışma ortamı ve sürümü (ör. Node.js / Python) burada belirtilecek._
-- Git
+| Paket | Süre | Fiyat |
+|---|---|---|
+| 14x Boost | 1 Ay | 130 ₺ |
+| 14x Boost | 3 Ay | 350 ₺ |
+| 625 Üye | — | 100 ₺ |
+
+Bunlar ilk çalıştırmada otomatik oluşturulur; panelden düzenleyebilirsin.
 
 ## Kurulum
 
-Depoyu klonlayın:
+### 1. Discord uygulaması
+
+1. https://discord.com/developers/applications adresinde botunun uygulamasını aç.
+2. **OAuth2** sekmesinden **Client ID** ve **Client Secret** değerlerini al.
+3. **Redirects** kısmına şunu ekle: `https://alanadin.com/wasexd/callback`
+   (`BASE_URL` ile birebir aynı olmalı.)
+
+### 2. Ortam değişkenleri
+
+`.env.example` dosyasını `.env` olarak kopyala ve doldur:
+
+| Değişken | Açıklama |
+|---|---|
+| `PORT` | Sunucu portu. bot-hosting.net `SERVER_PORT` verirse o otomatik kullanılır. |
+| `BASE_URL` | Sitenin tam adresi, sonunda `/` olmadan. Örn. `https://alanadin.com` veya `http://ip:port` |
+| `DISCORD_CLIENT_ID` | Discord uygulamasının Client ID değeri |
+| `DISCORD_CLIENT_SECRET` | Discord uygulamasının Client Secret değeri |
+| `OWNER_DISCORD_ID` | Panele girebilecek tek Discord ID (varsayılan `545574728186855424`) |
+| `SESSION_SECRET` | En az 32 karakterlik rastgele bir metin |
+| `SITE_NAME` | Sitede görünen ad |
+| `DISCORD_INVITE` | (İsteğe bağlı) Alt bilgide gösterilecek Discord davet linki |
+
+Rastgele `SESSION_SECRET` üretmek için:
 
 ```bash
-git clone https://github.com/orjinalwasexd/Boostdosyaxyzbotcode.git
-cd Boostdosyaxyzbotcode
+node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 ```
 
-Ardından bağımlılıkları yükleyin (kullanılan dile göre güncellenecek).
+### 3. Çalıştırma
 
-## Yapılandırma
-
-Bot token'ı, API anahtarları gibi gizli bilgileri **asla** depoya eklemeyin. Bunun yerine ortam değişkenleri veya `.gitignore` ile hariç tutulan bir `.env` dosyası kullanın:
-
-```env
-# Örnek .env
-BOT_TOKEN=buraya_token_yazin
+```bash
+npm install
+npm start
 ```
 
-## Kullanım
+bot-hosting.net üzerinde: dosyaları yükle (`node_modules` ve `data` hariç), başlangıç dosyası olarak `src/server.js` seç, `.env` dosyasını oluştur ve sunucuyu başlat.
 
-_Botu başlatma komutları burada yer alacak._
+## Güvenlik
+
+- Admin paneli ve paneli çalıştıran JavaScript, yalnızca giriş yapmış kurucuya sunulur; dışarıdan kaynak kodu görülemez.
+- Discord OAuth `state` doğrulaması, oturum yenileme ve giriş sonrası token iptali yapılır.
+- Yönetim işlemleri CSRF token + Origin kontrolü ile korunur.
+- Helmet ile sıkı Content-Security-Policy, HSTS (HTTPS'te), clickjacking koruması.
+- Genel, giriş ve panel API'leri için istek sınırlama (rate limit).
+- Tüm girişler sunucuda doğrulanır ve kısaltılır; sayfada yalnızca `textContent` ile basılır (XSS yok).
+- Oturum çerezi `HttpOnly`, `SameSite=Lax`, HTTPS'te `Secure`.
+- Veriler `data/store.json` dosyasında tutulur, atomik yazılır ve dışarıya sunulmaz.
+
+> Not: Tarayıcıya giden HTML/CSS/JS'nin `Ctrl+U` ile görüntülenmesi tamamen engellenemez. Bu yüzden istemci dosyalarında yorum ya da gereksiz bilgi yoktur ve tüm gizli işlemler sunucu tarafında yapılır.
 
 ## Proje Yapısı
 
 ```
-Boostdosyaxyzbotcode/
-├── LICENSE
-└── README.md
+├── public/            Herkese açık site (HTML, CSS, JS)
+├── views/             Yalnızca sunucunun sunduğu admin sayfaları
+├── src/
+│   ├── server.js      Giriş noktası
+│   ├── config.js      Ortam değişkenleri
+│   ├── db.js          JSON veri deposu
+│   ├── security.js    Güvenlik başlıkları, rate limit, yetki, CSRF
+│   ├── validate.js    Girdi doğrulama
+│   ├── sessionStore.js
+│   └── routes/
+│       ├── public.js  /api
+│       └── admin.js   /wasexd
+└── data/              Çalışınca oluşur (git'e eklenmez)
 ```
-
-## Katkıda Bulunma
-
-1. Depoyu fork'layın.
-2. Yeni bir dal oluşturun: `git checkout -b ozellik/yeni-ozellik`
-3. Değişikliklerinizi commit'leyin: `git commit -m "Yeni özellik ekle"`
-4. Dalınızı push'layın: `git push origin ozellik/yeni-ozellik`
-5. Bir Pull Request açın.
 
 ## Lisans
 
-Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
+[MIT](LICENSE)
