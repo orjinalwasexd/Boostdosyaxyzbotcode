@@ -1,9 +1,10 @@
 const session = require('express-session');
 
 class TtlStore extends session.Store {
-  constructor(ttlMs) {
+  constructor(ttlMs, maxItems = 5000) {
     super();
     this.ttlMs = ttlMs;
+    this.maxItems = maxItems;
     this.items = new Map();
     this.timer = setInterval(() => this.prune(), 10 * 60 * 1000);
     this.timer.unref();
@@ -32,6 +33,10 @@ class TtlStore extends session.Store {
   }
 
   set(sid, sess, cb) {
+    if (!this.items.has(sid) && this.items.size >= this.maxItems) {
+      this.prune();
+      if (this.items.size >= this.maxItems) this.items.delete(this.items.keys().next().value);
+    }
     this.items.set(sid, { data: JSON.stringify(sess), exp: this.expiry(sess) });
     if (cb) cb(null);
   }
